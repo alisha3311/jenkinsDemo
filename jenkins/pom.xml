@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>833b6527-38ed-40a7-8b1a-a3dcd16ed16d</groupId>
+    <artifactId>jenkins</artifactId>
+    <version>1.0.2</version>
+    <packaging>mule-application</packaging>
+
+    <name>jenkins</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <app.runtime>4.9.18</app.runtime>
+        <mule.maven.plugin.version>4.3.0</mule.maven.plugin.version>
+
+        <!-- default environment -->
+        <env>dev</env>
+    </properties>
+
+    <!-- IMPORTANT -->
+    <!-- This plugin must exist outside profiles -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mule.tools.maven</groupId>
+                <artifactId>mule-maven-plugin</artifactId>
+                <version>${mule.maven.plugin.version}</version>
+                <extensions>true</extensions>
+
+                <configuration>
+                    <cloudhub2Deployment>
+                        <uri>https://anypoint.mulesoft.com</uri>
+                        <provider>MC</provider>
+                        <environment>Sandbox</environment>
+                        <target>Cloudhub-US-East-2</target>
+
+                        <muleVersion>${app.runtime}</muleVersion>
+
+								<username>alisha11062026</username>
+								<password>Alisha11062026</password>
+
+                        <applicationName>jenkins-${env}</applicationName>
+
+                        <replicas>1</replicas>
+                        <vCores>0.1</vCores>
+
+                        <properties>
+                            <http.port>8081</http.port>
+                            <env>${env}</env>
+                        </properties>
+
+                        <integrations>
+                            <services>
+                                <objectStoreV2>
+                                    <enabled>true</enabled>
+                                </objectStoreV2>
+                            </services>
+                        </integrations>
+
+                        <deploymentSettings>
+                            <http>
+                                <inbound>
+                                    <publicUrl>true</publicUrl>
+                                    <forwardSslSession>false</forwardSslSession>
+                                    <lastMileSecurity>false</lastMileSecurity>
+                                </inbound>
+                            </http>
+                        </deploymentSettings>
+
+                    </cloudhub2Deployment>
+                </configuration>
+
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-http-connector</artifactId>
+            <version>1.10.3</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mule.connectors</groupId>
+            <artifactId>mule-sockets-connector</artifactId>
+            <version>1.2.5</version>
+            <classifier>mule-plugin</classifier>
+        </dependency>
+
+    </dependencies>
+
+    <repositories>
+
+        <repository>
+            <id>anypoint-exchange-v3</id>
+            <name>Anypoint Exchange</name>
+            <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+        </repository>
+
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+        </repository>
+
+    </repositories>
+
+    <pluginRepositories>
+
+        <pluginRepository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Releases Repository</name>
+            <url>https://repository.mulesoft.org/releases/</url>
+        </pluginRepository>
+
+    </pluginRepositories>
+
+</project>
