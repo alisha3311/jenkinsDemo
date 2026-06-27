@@ -17,14 +17,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                dir('jenkins') {
-                    echo 'Application is in Testing Phase'
-                }
-            }
-        }
-
         stage('Deployment') {
             steps {
                 dir('jenkins') {
