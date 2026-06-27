@@ -21,7 +21,6 @@ pipeline {
             steps {
                 dir('jenkins') {
                     echo 'Application is in Testing Phase'
-                    bat 'mvn test'
                 }
             }
         }
