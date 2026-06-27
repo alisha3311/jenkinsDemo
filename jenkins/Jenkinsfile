@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven-3.9'
+    }
+
     stages {
 
         stage('Build') {
@@ -19,8 +23,7 @@ pipeline {
 
         stage('Deployment') {
             steps {
-                echo 'Application is in Deployment Phase'
-                bat 'mvn clean package deploy -DmuleDeploy -Pdev'
+                bat 'mvn clean deploy -DmuleDeploy -Pdev'
             }
         }
     }
