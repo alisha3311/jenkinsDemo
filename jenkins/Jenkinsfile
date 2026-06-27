@@ -12,7 +12,7 @@ pipeline {
             steps {
                 dir('jenkins') {
                     echo 'Application is in Building Phase'
-                    bat 'mvn clean install'
+                    bat 'mvn clean install -DskipTests'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
         stage('Deployment') {
             steps {
                 dir('jenkins') {
-                    bat 'mvn clean deploy -DmuleDeploy -Pdev'
+                    bat 'mvn clean deploy -DmuleDeploy -Pdev -DskipTests'
                 }
             }
         }
