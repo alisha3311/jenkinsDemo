@@ -41,8 +41,11 @@
 
 						<muleVersion>${app.runtime}</muleVersion>
 
-						<username>alisha11062026</username>
-						<password>Alisha11062026</password>
+						<username>${anypoint.username}</username>
+						<password>${anypoint.password}</password>
+
+						<!-- <username>alisha11062026</username>
+								<password>Alisha11062026</password> -->
 
 						<applicationName>jenkins-${env}</applicationName>
 
@@ -108,6 +111,8 @@
 			<id>dev</id>
 			<properties>
 				<env>dev</env>
+		<anypoint.platform.client_id>${anypoint.platform.client_id}</anypoint.platform.client_id>
+		<anypoint.platform.client_secret>${anypoint.platform.client_secret}</anypoint.platform.client_secret>
 			</properties>
 		</profile>
 

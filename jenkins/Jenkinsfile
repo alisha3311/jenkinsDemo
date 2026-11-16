@@ -17,10 +17,30 @@ pipeline {
             }
         }
 
-        stage('Deployment') {
+        stage('Deploy to DEV') {
+            environment {
+                ANYPOINT_CREDS = credentials('DEV_ANYPOINT_CREDENTIALS')
+                CLIENT_ID = credentials('DEV_CLIENT_ID')
+                CLIENT_SECRET = credentials('DEV_CLIENT_SECRET')
+            }
+
             steps {
                 dir('jenkins') {
-                    bat 'mvn clean deploy -DmuleDeploy -Pdev -DskipTests'
+                    bat 'mvn clean deploy -DmuleDeploy -Pdev -DskipTests -Danypoint.username="%ANYPOINT_CREDS_USR%" -Danypoint.password="%ANYPOINT_CREDS_PSW%" -Danypoint.platform.client_id="%CLIENT_ID%" -Danypoint.platform.client_secret="%CLIENT_SECRET%"'
+                }
+            }
+        }
+
+        stage('Deploy to PROD') {
+            environment {
+                ANYPOINT_CREDS = credentials('PROD_ANYPOINT_CREDENTIALS')
+                CLIENT_ID = credentials('PROD_CLIENT_ID')
+                CLIENT_SECRET = credentials('PROD_CLIENT_SECRET')
+            }
+
+            steps {
+                dir('jenkins') {
+                    bat 'mvn clean deploy -DmuleDeploy -Pprod -DskipTests -Danypoint.username="%ANYPOINT_CREDS_USR%" -Danypoint.password="%ANYPOINT_CREDS_PSW%" -Danypoint.platform.client_id="%CLIENT_ID%" -Danypoint.platform.client_secret="%CLIENT_SECRET%"'
                 }
             }
         }
